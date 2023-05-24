@@ -1,1 +1,37 @@
 
+import couchdb
+import ijson
+from decimal import Decimal
+
+
+username = 'user'
+password = 'pwd'
+couch = couchdb.Server(f'http://{username}:{password}@172.26.134.204:5984/')
+
+
+db_name = 'twitter_all_new'
+
+
+if db_name not in couch:
+    db = couch.create(db_name)
+else:
+    db = couch[db_name]
+
+
+with open('/Users/pipijie/Desktop/general_twitter.json', encoding='utf-8') as f:
+    objects = ijson.items(f, 'item')
+    documents = []  
+    count = 0  
+    for obj in objects:
+        if 'sentiment_score' in obj:
+            obj['sentiment_score'] = float(obj['sentiment_score'])
+        if 'polarity' in obj:
+            obj['polarity'] = float(obj['polarity'])  
+        documents.append(obj)
+        count += 1
+        if len(documents) >= 100:
+            db.update(documents)
+            documents = []  
+    if documents:
+        db.update(documents)
+
