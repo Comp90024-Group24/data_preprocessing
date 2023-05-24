@@ -1,0 +1,47 @@
+# CouchDB Data Import Script
+
+This script is used to import JSON formatted data into a CouchDB database.
+
+## Dependencies
+
+- couchdb: Used for connecting to and manipulating CouchDB databases.
+- ijson: Used for iterative JSON parsing to read data from the JSON file.
+- decimal: Used for handling floating-point number data types.
+
+## Instructions
+
+1. Install the dependencies:
+
+   ```shell
+   pip install couchdb ijson
+   ```
+
+2. Modify the connection parameters:
+
+   - Update the `username` and `password` variables with your CouchDB instance's username and password.
+   - Modify `172.26.134.204:5984` to match the address and port number of your CouchDB instance.
+
+3. Specify the database name:
+
+   - Modify the `db_name` variable to the desired database name where you want to import the data.
+
+4. Prepare the data file:
+
+   - Place the JSON data file you want to import in a suitable location and update the file path in the `open()` function with the appropriate file path parameter.
+
+5. Run the script:
+
+   - Execute the script in the command line:
+
+     ```shell
+     python data_import_script.py
+     ```
+
+   - The script will read the data file line by line and import the data into the specified CouchDB database.
+   - During the import process, the script will convert floating-point number fields to their respective data types and perform batch save operations based on the specified batch size.
+   - The import progress will be displayed in real-time on the console.
+
+6. Import completed:
+
+   - Once the import is finished, you can view the imported data in the specified CouchDB database.
+
